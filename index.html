@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Timer</title>
+  <style>
+    body {
+      font-family: monospace;
+    }
+
+    ul li {
+      line-height: 30px;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div id="app">
+    <div>
+      <h1>Timer</h1>
+      <div class="counter"> {{ minutes }}m {{ seconds }}s</div>
+      <button v-on:click="start" v-if="!interval">Start</button>
+      <button v-on:click="stop" v-if="interval">Stop</button>
+      <button v-on:click="reset">Reset</button>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+  <script>
+    var app = new Vue({
+      el: '#app',
+      methods: {
+        stop: function(){
+          clearInterval(this.interval);
+          this.interval = null;
+        },
+        start: function () {
+          this.interval = setInterval(() => {
+            this.seconds++;
+            if (this.seconds > 60) {
+              this.seconds = 0;
+              this.minutes++;
+            }
+          }, 100)
+        },
+        reset: function () {
+           this.minutes = 0
+           this.seconds = 0
+           this.stop();
+        }
+
+      },
+      mounted: function () {
+
+      },
+      data: function () {
+        return {
+          interval: null,
+          minutes: 0,
+          seconds: 0
+
+        }
+      }
+    })
+  </script>
+
+
+</body>
+
+</html>
